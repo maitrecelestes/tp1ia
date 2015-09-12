@@ -1,23 +1,26 @@
-﻿Build started 12/09/2015 10:43:23.
+﻿Build started 12/09/2015 10:50:41.
      1>Project "C:\Users\Romain S\Documents\Workspace\workspace_ia\tp1ia\Buckland_Chapter2-State Machines\WestWorldWithMessaging\WestWorldWithMessaging.vcxproj" on node 2 (build target(s)).
      1>InitializeBuildStatus:
          Creating ".\Debug\WestWorldWithMessaging.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0600 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /Gy- /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo".\Debug\\" /Fd".\Debug\vc100.pdb" /FR".\Debug\\" /Gd /TP /analyze- /errorReport:prompt BaseGameEntity.cpp EntityManager.cpp main.cpp MessageDispatcher.cpp Miner.cpp MinerOwnedStates.cpp MinersWife.cpp MinersWifeOwnedStates.cpp ..\..\Common\Time\CrudeTimer.cpp
-         CrudeTimer.cpp
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _VC80_UPGRADE=0x0600 /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /Gy- /fp:precise /Zc:wchar_t /Zc:forScope /GR /Fo".\Debug\\" /Fd".\Debug\vc100.pdb" /FR".\Debug\\" /Gd /TP /analyze- /errorReport:prompt Banker.cpp BankerOwnedStates.cpp main.cpp MessageDispatcher.cpp Miner.cpp MinerOwnedStates.cpp MinersWife.cpp MinersWifeOwnedStates.cpp
+         main.cpp
+         BankerOwnedStates.cpp
+         Banker.cpp
+         Generating Code...
+         Compiling...
          MinersWifeOwnedStates.cpp
          MinersWife.cpp
          MinerOwnedStates.cpp
          Miner.cpp
          MessageDispatcher.cpp
-         main.cpp
-         EntityManager.cpp
-         BaseGameEntity.cpp
          Generating Code...
        ManifestResourceCompile:
-         C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\rc.exe /nologo /fo".\Debug\WestWorldWithMessaging.exe.embed.manifest.res" .\Debug\WestWorldWithMessaging_manifest.rc 
+         All outputs are up-to-date.
        Link:
          C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:".\Debug\WestWorldWithMessaging.exe" /INCREMENTAL /NOLOGO odbc32.lib odbccp32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /ManifestFile:".\Debug\WestWorldWithMessaging.exe.intermediate.manifest" /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /DEBUG /PDB:"C:\Users\Romain S\Documents\Workspace\workspace_ia\tp1ia\Buckland_Chapter2-State Machines\WestWorldWithMessaging\Debug\WestWorldWithMessaging.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\Debug\WestWorldWithMessaging.lib" /MACHINE:X86 .\Debug\WestWorldWithMessaging.exe.embed.manifest.res
+         .\Debug\Banker.obj
+         .\Debug\BankerOwnedStates.obj
          .\Debug\BaseGameEntity.obj
          .\Debug\EntityManager.obj
          .\Debug\main.obj
@@ -27,7 +30,6 @@
          .\Debug\MinersWife.obj
          .\Debug\MinersWifeOwnedStates.obj
          .\Debug\CrudeTimer.obj
-         LINK : program database C:\Users\Romain S\Documents\Workspace\workspace_ia\tp1ia\Buckland_Chapter2-State Machines\WestWorldWithMessaging\Debug\WestWorldWithMessaging.pdb missing; performing full link
        Manifest:
          C:\Program Files\Microsoft SDKs\Windows\v7.0A\bin\mt.exe /nologo /verbose /out:".\Debug\WestWorldWithMessaging.exe.embed.manifest" /manifest .\Debug\WestWorldWithMessaging.exe.intermediate.manifest
          All outputs are up-to-date.
@@ -35,7 +37,7 @@
          All outputs are up-to-date.
          WestWorldWithMessaging.vcxproj -> C:\Users\Romain S\Documents\Workspace\workspace_ia\tp1ia\Buckland_Chapter2-State Machines\WestWorldWithMessaging\.\Debug\WestWorldWithMessaging.exe
        BscMake:
-         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o".\Debug\WestWorldWithMessaging.bsc" .\Debug\BaseGameEntity.sbr .\Debug\EntityManager.sbr .\Debug\main.sbr .\Debug\MessageDispatcher.sbr .\Debug\Miner.sbr .\Debug\MinerOwnedStates.sbr .\Debug\MinersWife.sbr .\Debug\MinersWifeOwnedStates.sbr .\Debug\CrudeTimer.sbr
+         C:\Program Files\Microsoft Visual Studio 10.0\VC\bin\bscmake.exe /nologo /o".\Debug\WestWorldWithMessaging.bsc" .\Debug\Banker.sbr .\Debug\BankerOwnedStates.sbr .\Debug\BaseGameEntity.sbr .\Debug\EntityManager.sbr .\Debug\main.sbr .\Debug\MessageDispatcher.sbr .\Debug\Miner.sbr .\Debug\MinerOwnedStates.sbr .\Debug\MinersWife.sbr .\Debug\MinersWifeOwnedStates.sbr .\Debug\CrudeTimer.sbr
        FinalizeBuildStatus:
          Deleting file ".\Debug\WestWorldWithMessaging.unsuccessfulbuild".
          Touching ".\Debug\WestWorldWithMessaging.lastbuildstate".
@@ -43,4 +45,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:13.93
+Time Elapsed 00:00:14.30

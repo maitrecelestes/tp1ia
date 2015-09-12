@@ -121,6 +121,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Banker.cpp" />
+    <ClCompile Include="BankerOwnedStates.cpp" />
     <ClCompile Include="BaseGameEntity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -132,6 +134,8 @@
     <ClCompile Include="..\..\Common\Time\CrudeTimer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Banker.h" />
+    <ClInclude Include="BankerOwnedStates.h" />
     <ClInclude Include="BaseGameEntity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="EntityNames.h" />

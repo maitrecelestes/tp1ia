@@ -33,34 +33,34 @@ class Banker : public BaseGameEntity
 private:
 
   //an instance of the state machine class
-  StateMachine<Banker>*  m_pStateMachine;
+  StateMachine<Banker>*  b_pStateMachine;
   
-  location_type         m_Location;
+  location_type         b_Location;
 
 
   //the higher the value, the thirstier the miner
-  int                   m_iThirst;
+  int                   b_iThirst;
 
   //the higher the value, the more tired the miner
-  int                   m_iFatigue;
+  int                   b_iFatigue;
 
 public:
 
-  Banker(int id):m_Location(shack_banker),
-                          m_iThirst(0),
-                          m_iFatigue(0),
+  Banker(int id):b_Location(shack_banker),
+                          b_iThirst(0),
+                          b_iFatigue(0),
                           BaseGameEntity(id)
                                
   {
     //set up state machine
-    m_pStateMachine = new StateMachine<Banker>(this);
+    b_pStateMachine = new StateMachine<Banker>(this);
     
-    m_pStateMachine->SetCurrentState(GoHomeBankerAndSleepTilRested::Instance());
+    b_pStateMachine->SetCurrentState(GoHomeBankerAndSleepTilRested::Instance());
 
     /* NOTE, A GLOBAL STATE HAS NOT BEEN IMPLEMENTED FOR THE BANKER */
   }
 
-  ~Banker(){delete m_pStateMachine;}
+  ~Banker(){delete b_pStateMachine;}
 
   //this must be implemented
   void Update();
@@ -69,21 +69,22 @@ public:
   virtual bool  HandleMessage(const Telegram& msg);
 
   
-  StateMachine<Banker>* GetFSM()const{return m_pStateMachine;}
+  StateMachine<Banker>* GetFSM()const{return b_pStateMachine;}
 
 
   
   //-------------------------------------------------------------accessors
-  location_type Location()const{return m_Location;}
-  void          ChangeLocation(location_type loc){m_Location=loc;}
+  location_type Location()const{return b_Location;}
+  void          ChangeLocation(location_type loc){b_Location=loc;}
     
 
   bool          Fatigued()const;
-  void          DecreaseFatigue(){m_iFatigue -= 1;}
-  void          IncreaseFatigue(){m_iFatigue += 1;}
+  int			ShowFatigue(){return b_iFatigue;}
+  void          DecreaseFatigue(){b_iFatigue -= 1;}
+  void          IncreaseFatigue(){b_iFatigue += 1;}
 
   bool          Thirsty()const; 
-  void          BuyAndDrinkAWhiskey(){m_iThirst = 0;}
+  void          BuyAndDrinkAWhiskey(){b_iThirst = 0;}
 
 };
 

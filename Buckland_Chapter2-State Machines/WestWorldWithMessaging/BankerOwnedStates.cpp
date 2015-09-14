@@ -35,8 +35,9 @@ void EnterBankAndWork::Enter(Banker* pBanker)
   if (pBanker->Location() != bank)
   {
     cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "On my way to the bank!";
+	 
+	pBanker->ChangeLocation(bank);
 
-    pBanker->ChangeLocation(bank);
   }
 }
 
@@ -54,6 +55,9 @@ void EnterBankAndWork::Execute(Banker* pBanker)
   if (pBanker->Thirsty())
   {
     pBanker->GetFSM()->ChangeState(QuenchThirstBanker::Instance());
+  } else if (pBanker -> Fatigued())
+  {
+	pBanker->GetFSM()->ChangeState(GoHomeBankerAndSleepTilRested::Instance());
   }
 }
 
@@ -94,7 +98,8 @@ void GoHomeBankerAndSleepTilRested::Enter(Banker* pBanker)
 void GoHomeBankerAndSleepTilRested::Execute(Banker* pBanker)
 { 
   //if banker is not fatigued start to work again.
-  if (!pBanker->Fatigued())
+  //if (!pBanker->Fatigued()) SI ON FAIT COMME POUR MINEUR, IL NE PERD QUE UN POINT DE FATIGUE
+  if (pBanker->ShowFatigue() == 0)
   {
      cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " 
           << "I'm finally rested, let's work some more!";
@@ -165,14 +170,22 @@ void QuenchThirstBanker::Execute(Banker* pBanker)
   pBanker->BuyAndDrinkAWhiskey();
 
   cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "Pretty good taste for a whiskey";
-
-  pBanker->GetFSM()->ChangeState(EnterBankAndWork::Instance());  
+  if (pBanker -> Fatigued()){
+	  pBanker->GetFSM()->ChangeState(GoHomeBankerAndSleepTilRested::Instance());
+  } else {
+	  pBanker->GetFSM()->ChangeState(EnterBankAndWork::Instance()); 
+  }
+   
 }
 
 
 void QuenchThirstBanker::Exit(Banker* pBanker)
 { 
-  cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "That sure is the best saloon! Let's return to the bank";
+	if (pBanker -> Fatigued()){
+		 cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "I'm too tired for returing work. Let's back home!";
+	} else {
+		 cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "That sure is the best saloon! Let's return to the bank";
+	}
 }
 
 

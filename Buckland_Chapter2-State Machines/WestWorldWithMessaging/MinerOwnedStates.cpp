@@ -167,6 +167,7 @@ void GoHomeAndSleepTilRested::Enter(Miner* pMiner)
 void GoHomeAndSleepTilRested::Execute(Miner* pMiner)
 { 
   //if miner is not fatigued start to dig for nuggets again.
+  
   if (!pMiner->Fatigued())
   {
      cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " 
@@ -179,7 +180,6 @@ void GoHomeAndSleepTilRested::Execute(Miner* pMiner)
   {
     //sleep
     pMiner->DecreaseFatigue();
-
     cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "ZZZZ... ";
   } 
 }

@@ -2,7 +2,7 @@
 
 bool Banker::HandleMessage(const Telegram& msg)
 {
-  return m_pStateMachine->HandleMessage(msg);
+  return b_pStateMachine->HandleMessage(msg);
 }
 
 
@@ -10,22 +10,22 @@ void Banker::Update()
 {
   SetTextColor(FOREGROUND_BLUE| FOREGROUND_INTENSITY);
 
-  m_iThirst += 1;
+  b_iThirst += 1;
   
-  m_pStateMachine->Update();
+  b_pStateMachine->Update();
 }
 
 
 bool Banker::Thirsty()const
 {
-  if (m_iThirst >= ThirstLevelBanker){return true;}
+  if (b_iThirst >= ThirstLevelBanker){return true;}
 
   return false;
 }
 
 bool Banker::Fatigued()const
 {
-  if (m_iFatigue > TirednessThresholdBanker)
+  if (b_iFatigue > TirednessThresholdBanker)
   {
     return true;
   }

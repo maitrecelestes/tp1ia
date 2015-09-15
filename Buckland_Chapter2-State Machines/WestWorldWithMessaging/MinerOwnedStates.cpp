@@ -96,6 +96,13 @@ void VisitBankAndDepositGold::Enter(Miner* pMiner)
     cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Goin' to the bank. Yes siree";
 
     pMiner->ChangeLocation(bank);
+
+	//let the banker know he is at the bank
+    Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
+                              pMiner->ID(),        //ID of sender
+                              ent_Mathieu,            //ID of recipient
+                              Msg_ImatBank,   //the message
+                              NO_ADDITIONAL_INFO);    
   }
 }
 

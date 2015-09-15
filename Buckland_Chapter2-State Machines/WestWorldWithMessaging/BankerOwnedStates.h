@@ -105,5 +105,12 @@ public:
   virtual bool OnMessage(Banker* agent, const Telegram& msg);
 };
 
+class BankerOwnedStates
+{
+public:
+	BankerOwnedStates(void);
+	~BankerOwnedStates(void);
+};
+
 
 #endif

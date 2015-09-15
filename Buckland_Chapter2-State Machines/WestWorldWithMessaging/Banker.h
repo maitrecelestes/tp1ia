@@ -88,6 +88,13 @@ public:
 
 };
 
+class banker
+{
+public:
+	banker(void);
+	~banker(void);
+};
+
 
 
 #endif

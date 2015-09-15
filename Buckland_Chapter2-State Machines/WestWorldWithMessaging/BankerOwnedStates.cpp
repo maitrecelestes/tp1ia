@@ -71,7 +71,20 @@ void EnterBankAndWork::Exit(Banker* pBanker)
 
 bool EnterBankAndWork::OnMessage(Banker* pBanker, const Telegram& msg)
 {
-  //send msg to global message handler
+ switch(msg.Msg)
+  {
+  case Msg_ImatBank:
+   {
+       cout << "\nMessage handled by " << GetNameOfEntity(pBanker->ID()) << " at time: " 
+       << Clock->GetCurrentTime();
+
+     SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
+
+     cout << "\n" << GetNameOfEntity(pBanker->ID()) << 
+          ": Ok Miner, I'm ready to collect ya nuggets!";
+	 return true;
+   }
+ }
   return false;
 }
 
@@ -123,25 +136,21 @@ void GoHomeBankerAndSleepTilRested::Exit(Banker* pBanker)
 
 bool GoHomeBankerAndSleepTilRested::OnMessage(Banker* pBanker, const Telegram& msg)
 {
-  /*SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
-
-   switch(msg.Msg)
+  switch(msg.Msg)
+  {
+  case Msg_ImatBank:
    {
-   case Msg_StewReady:
+       cout << "\nMessage handled by " << GetNameOfEntity(pBanker->ID()) << " at time: " 
+       << Clock->GetCurrentTime();
 
-     cout << "\nMessage handled by " << GetNameOfEntity(pMiner->ID()) 
-     << " at time: " << Clock->GetCurrentTime();
+     SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
 
-     SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
-
-     cout << "\n" << GetNameOfEntity(pMiner->ID()) 
-          << ": Okay Hun, ahm a comin'!";
-
-     pMiner->GetFSM()->ChangeState(EatStew::Instance());
-      
-     return true;
-
-   }//end switch*/
+     cout << "\n" << GetNameOfEntity(pBanker->ID()) << 
+          ": Ok Miner, I'm ready to collect ya nuggets!";
+		pBanker->GetFSM()->ChangeState(EnterBankAndWork::Instance());
+		return true;
+   }
+ }
    
    return false; //send message to global message handler
 }
@@ -191,9 +200,33 @@ void QuenchThirstBanker::Exit(Banker* pBanker)
 
 bool QuenchThirstBanker::OnMessage(Banker* pBanker, const Telegram& msg)
 {
-  //send msg to global message handler
+  switch(msg.Msg)
+  {
+  case Msg_ImatBank:
+   {
+       cout << "\nMessage handled by " << GetNameOfEntity(pBanker->ID()) << " at time: " 
+       << Clock->GetCurrentTime();
+
+     SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
+
+     cout << "\n" << GetNameOfEntity(pBanker->ID()) << 
+          ": Ok Miner, I'm ready to collect ya nuggets!";
+		pBanker->GetFSM()->ChangeState(EnterBankAndWork::Instance());
+		return true;
+   }
+ }
   return false;
 }
 
 
 
+
+
+BankerOwnedStates::BankerOwnedStates(void)
+{
+}
+
+
+BankerOwnedStates::~BankerOwnedStates(void)
+{
+}

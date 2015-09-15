@@ -32,3 +32,13 @@ bool Banker::Fatigued()const
 
   return false;
 }
+
+
+banker::banker(void)
+{
+}
+
+
+banker::~banker(void)
+{
+}

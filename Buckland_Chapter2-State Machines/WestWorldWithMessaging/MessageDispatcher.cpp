@@ -55,6 +55,11 @@ void MessageDispatcher::DispatchMessage(double  delay,
                                         int    msg,
                                         void*  ExtraInfo)
 {
+	/*if((sender==0 && receiver==2 && msg==3) || (sender == 2 && receiver==0 && msg ==3))
+	{
+	}
+	else
+	{*/
   SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
 
   //get pointers to the sender and receiver
@@ -96,8 +101,9 @@ void MessageDispatcher::DispatchMessage(double  delay,
     cout << "\nDelayed telegram from " << GetNameOfEntity(pSender->ID()) << " recorded at time " 
             << Clock->GetCurrentTime() << " for " << GetNameOfEntity(pReceiver->ID())
             << ". Msg is "<< MsgToStr(msg);
-            
   }
+            
+  //}
 }
 
 

@@ -171,6 +171,11 @@ void QuenchThirstBanker::Enter(Banker* pBanker)
     pBanker->ChangeLocation(saloon);
 
     cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "I need to drink something";
+	Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
+                              pBanker->ID(),        //ID of sender
+                              ent_Miner_Bob,            //ID of recipient
+                              Msg_ImThirsty,   //the message
+                              NO_ADDITIONAL_INFO);    
   }
 }
 
@@ -213,6 +218,16 @@ bool QuenchThirstBanker::OnMessage(Banker* pBanker, const Telegram& msg)
           ": Ok Miner, I'm ready to collect ya nuggets!";
 		pBanker->GetFSM()->ChangeState(EnterBankAndWork::Instance());
 		return true;
+   }
+  case  Msg_ImThirsty:
+   {
+       
+
+     SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_RED);
+
+     cout << "\n" << GetNameOfEntity(pBanker->ID()) << 
+          ": Ok Miner, I'm ready for some fight if you want it so much!";
+	 return true;
    }
  }
   return false;

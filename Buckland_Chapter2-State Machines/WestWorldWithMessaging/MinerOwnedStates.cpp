@@ -237,6 +237,11 @@ void QuenchThirst::Enter(Miner* pMiner)
     pMiner->ChangeLocation(saloon);
 
     cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Boy, ah sure is thusty! Walking to the saloon";
+	Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
+                              pMiner->ID(),        //ID of sender
+                              ent_Mathieu,            //ID of recipient
+                              Msg_ImThirsty,   //the message
+                              NO_ADDITIONAL_INFO);    
   }
 }
 
@@ -259,6 +264,19 @@ void QuenchThirst::Exit(Miner* pMiner)
 bool QuenchThirst::OnMessage(Miner* pMiner, const Telegram& msg)
 {
   //send msg to global message handler
+	switch(msg.Msg)
+	{
+	case  Msg_ImThirsty:
+   {
+       
+
+     SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_RED);
+
+     cout << "\n" << GetNameOfEntity(pMiner->ID()) << 
+          ": Ok Miner, I'm ready for some fight if you want it so much!";
+	 return true;
+   }
+   }
   return false;
 }
 

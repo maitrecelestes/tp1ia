@@ -17,6 +17,7 @@
 
 #include "misc/ConsoleUtils.h"
 #include "messaging/Telegram.h"
+#include "Locations.h"
 
 class BaseGameEntity;
 

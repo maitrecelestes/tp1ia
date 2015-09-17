@@ -38,10 +38,10 @@ private:
   location_type         b_Location;
 
 
-  //the higher the value, the thirstier the miner
+  //the higher the value, the thirstier the banker
   int                   b_iThirst;
 
-  //the higher the value, the more tired the miner
+  //the higher the value, the more tired the banker
   int                   b_iFatigue;
 
 public:

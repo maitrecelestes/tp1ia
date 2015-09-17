@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <SccProjectName />
     <SccLocalPath />
-    <ProjectGuid>{1CBEC621-50A5-4A84-A876-4354F41C4F7D}</ProjectGuid>
+    <ProjectGuid>{E7F7D4B5-2D6E-4597-AEC4-1CCA41484EB4}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -126,6 +126,8 @@
   <ItemGroup>
     <ClCompile Include="Banker.cpp" />
     <ClCompile Include="BankerOwnedStates.cpp" />
+    <ClCompile Include="Barman.cpp" />
+    <ClCompile Include="BarmanOwnedStates.cpp" />
     <ClCompile Include="BaseGameEntity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="main.cpp" />
@@ -139,6 +141,8 @@
   <ItemGroup>
     <ClInclude Include="Banker.h" />
     <ClInclude Include="BankerOwnedStates.h" />
+    <ClInclude Include="Barman.h" />
+    <ClInclude Include="BarmanOwnedStates.h" />
     <ClInclude Include="BaseGameEntity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="EntityNames.h" />

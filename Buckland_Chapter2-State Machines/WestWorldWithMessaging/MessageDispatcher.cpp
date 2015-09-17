@@ -39,7 +39,10 @@ void MessageDispatcher::Discharge(BaseGameEntity* pReceiver,
   if (!pReceiver->HandleMessage(telegram))
   {
     //telegram could not be handled
+	  if(telegram.Msg<3)
+	  {
     cout << "Message not handled";
+	  }
   }
 }
 
@@ -77,14 +80,18 @@ void MessageDispatcher::DispatchMessage(double  delay,
   //create the telegram
   Telegram telegram(0, sender, receiver, msg, ExtraInfo);
   
-  //if there is no delay, route telegram immediately                       
+  //if there is no delay, route telegram immediately     
+  
   if (delay <= 0.0f)                                                        
+  {
+	  if(msg<3)
   {
     cout << "\nInstant telegram dispatched at time: " << Clock->GetCurrentTime()
          << " by " << GetNameOfEntity(pSender->ID()) << " for " << GetNameOfEntity(pReceiver->ID()) 
          << ". Msg is "<< MsgToStr(msg);
 
     //send the telegram to the recipient
+  }
     Discharge(pReceiver, telegram);
   }
 
@@ -97,10 +104,12 @@ void MessageDispatcher::DispatchMessage(double  delay,
 
     //and put it in the queue
     PriorityQ.insert(telegram);   
-
+	 if(msg<3)
+  {
     cout << "\nDelayed telegram from " << GetNameOfEntity(pSender->ID()) << " recorded at time " 
             << Clock->GetCurrentTime() << " for " << GetNameOfEntity(pReceiver->ID())
             << ". Msg is "<< MsgToStr(msg);
+  }
   }
             
   //}

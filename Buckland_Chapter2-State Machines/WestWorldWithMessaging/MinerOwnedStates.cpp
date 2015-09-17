@@ -274,6 +274,7 @@ bool QuenchThirst::OnMessage(Miner* pMiner, const Telegram& msg)
 
      cout << "\n" << GetNameOfEntity(pMiner->ID()) << 
           ": Ok Miner, I'm ready for some fight if you want it so much!";
+	 pMiner->GetFSM()->ChangeState(Fighting::Instance());
 	 return true;
    }
    }
@@ -314,4 +315,42 @@ bool EatStew::OnMessage(Miner* pMiner, const Telegram& msg)
   return false;
 }
 
+
+// Now the banker wants to fight with the miner
+
+Fighting* Fighting::Instance()
+{
+  static Fighting instance;
+
+  return &instance;
+}
+
+void Fighting::Enter(Miner* pMiner)
+{
+  if (pMiner->Location() != saloon)
+  {    
+    pMiner->ChangeLocation(saloon);
+  }
+  cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Come to me Banker, I'm ready!";
+}
+
+void Fighting::Execute(Miner* pMiner)
+{
+  cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Pretty good taste for a whiskey";
+  pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());  
+   
+}
+
+
+void Fighting::Exit(Miner* pMiner)
+{ 
+	
+}
+
+
+
+bool Fighting::OnMessage(Miner* pMiner, const Telegram& msg)
+{
+	return false;
+}
 

@@ -1,6 +1,7 @@
 #include <fstream>
 #include <time.h>
 #include "Banker.h"
+#include "Barman.h"
 #include "Locations.h"
 #include "Miner.h"
 #include "MinersWife.h"
@@ -31,10 +32,14 @@ int main()
    //create the banker
   Banker* Mathieu = new Banker(ent_Mathieu);
 
+  //create the barman
+  Barman* Roger= new Barman (ent_Roger);
+
   //register them with the entity manager
   EntityMgr->RegisterEntity(Bob);
   EntityMgr->RegisterEntity(Elsa);
   EntityMgr->RegisterEntity(Mathieu);
+  EntityMgr->RegisterEntity(Roger);
 
   //run Bob and Elsa through a few Update calls
   for (int i=0; i<30; ++i)
@@ -42,6 +47,7 @@ int main()
     Bob->Update();
     Elsa->Update();
 	Mathieu->Update();
+	Roger->Update();
 
     //dispatch any delayed messages
     Dispatch->DispatchDelayedMessages();
@@ -53,6 +59,7 @@ int main()
   delete Bob;
   delete Elsa;
   delete Mathieu;
+  delete Roger;
 
   //wait for a keypress before exiting
   PressAnyKeyToContinue();

@@ -105,6 +105,32 @@ public:
   virtual bool OnMessage(Banker* agent, const Telegram& msg);
 };
 
+//-------------------------------------------------
+
+class BankerFighting : public State<Banker>
+{
+private:
+  
+  BankerFighting(){}
+
+  //copy ctor and assignment should be private
+  BankerFighting(const BankerFighting&);
+  BankerFighting& operator=(const BankerFighting&);
+ 
+public:
+
+  //this is a singleton
+  static BankerFighting* Instance();
+
+  virtual void Enter(Banker* pBanker);
+
+  virtual void Execute(Banker* pBanker);
+
+  virtual void Exit(Banker* pBanker);
+
+  virtual bool OnMessage(Banker* agent, const Telegram& msg);
+};
+
 class BankerOwnedStates
 {
 public:

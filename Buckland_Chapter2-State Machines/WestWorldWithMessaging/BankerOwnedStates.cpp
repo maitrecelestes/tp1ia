@@ -195,12 +195,16 @@ void QuenchThirstBanker::Execute(Banker* pBanker)
 
 void QuenchThirstBanker::Exit(Banker* pBanker)
 { 
+	
+	SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
 	if (pBanker -> Fatigued()){
 		 cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "I'm too tired for returing work. Let's back home!";
 	} else {
+
 		 cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "That sure is the best saloon! Let's return to the bank";
 	}
 }
+
 
 
 bool QuenchThirstBanker::OnMessage(Banker* pBanker, const Telegram& msg)
@@ -223,10 +227,7 @@ bool QuenchThirstBanker::OnMessage(Banker* pBanker, const Telegram& msg)
    {
        
 
-     SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_RED);
-
-     cout << "\n" << GetNameOfEntity(pBanker->ID()) << 
-          ": Ok Miner, I'm ready for some fight if you want it so much!";
+	   pBanker->GetFSM()->ChangeState(BankerFighting::Instance());
 	 return true;
    }
  }
@@ -234,7 +235,49 @@ bool QuenchThirstBanker::OnMessage(Banker* pBanker, const Telegram& msg)
 }
 
 
+// Now the banker wants to fight with the miner
 
+BankerFighting* BankerFighting::Instance()
+{
+  static BankerFighting instance;
+
+  return &instance;
+}
+
+void BankerFighting::Enter(Banker* pBanker)
+{
+  if (pBanker->Location() != saloon)
+  {    
+    pBanker->ChangeLocation(saloon);
+  }
+	SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
+  cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "Ok Miner, I'm ready to fight with you";
+}
+
+void BankerFighting::Execute(Banker* pBanker)
+{
+	SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
+  cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "Pretty good taste for a whiskey";
+  if (pBanker -> Fatigued()){
+	  pBanker->GetFSM()->ChangeState(GoHomeBankerAndSleepTilRested::Instance());
+  } else {
+	  pBanker->GetFSM()->ChangeState(EnterBankAndWork::Instance()); 
+  }
+   
+}
+
+
+void BankerFighting::Exit(Banker* pBanker)
+{ 
+	
+}
+
+
+
+bool BankerFighting::OnMessage(Banker* pBanker, const Telegram& msg)
+{
+	return false;
+}
 
 
 BankerOwnedStates::BankerOwnedStates(void)

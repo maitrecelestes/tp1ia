@@ -2,18 +2,18 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <Filter Include="Source Files">
-      <UniqueIdentifier>{5b71e389-c0fc-483e-8527-35b9cc0ceb40}</UniqueIdentifier>
+      <UniqueIdentifier>{cdd84c63-a39f-472f-b380-4d742e9d78a0}</UniqueIdentifier>
       <Extensions>cpp;c;cxx;rc;def;r;odl;idl;hpj;bat</Extensions>
     </Filter>
     <Filter Include="Header Files">
-      <UniqueIdentifier>{b8d5a7b7-24e2-44db-a211-b818f6a1668f}</UniqueIdentifier>
+      <UniqueIdentifier>{e3a23f92-7684-4e5b-b942-6949f727e959}</UniqueIdentifier>
       <Extensions>h;hpp;hxx;hm;inl</Extensions>
     </Filter>
     <Filter Include="misc">
-      <UniqueIdentifier>{f5697a4b-a5c5-46ea-b873-a2d3abf2f2c6}</UniqueIdentifier>
+      <UniqueIdentifier>{e8da2cbe-50f0-40e3-bfd6-c4e33eef4121}</UniqueIdentifier>
     </Filter>
     <Filter Include="Resource Files">
-      <UniqueIdentifier>{b4c7e425-98ac-400b-b457-06d82daa3f4c}</UniqueIdentifier>
+      <UniqueIdentifier>{4460b9a6-708b-4111-8bfb-3b253eff85d0}</UniqueIdentifier>
       <Extensions>ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe</Extensions>
     </Filter>
   </ItemGroup>
@@ -49,6 +49,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="BankerOwnedStates.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Barman.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BarmanOwnedStates.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -114,6 +120,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="BankerOwnedStates.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Barman.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BarmanOwnedStates.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

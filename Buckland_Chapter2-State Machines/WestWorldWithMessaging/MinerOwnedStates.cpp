@@ -30,6 +30,8 @@ EnterMineAndDigForNugget* EnterMineAndDigForNugget::Instance()
 
 void EnterMineAndDigForNugget::Enter(Miner* pMiner)
 {
+	
+	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
   //if the miner is not already located at the goldmine, he must
   //change location to the gold mine
   if (pMiner->Location() != goldmine)
@@ -50,7 +52,8 @@ void EnterMineAndDigForNugget::Execute(Miner* pMiner)
   pMiner->AddToGoldCarried(1);
 
   pMiner->IncreaseFatigue();
-
+  
+	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
   cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Pickin' up a nugget";
 
   //if enough gold mined, go and put it in the bank
@@ -68,6 +71,8 @@ void EnterMineAndDigForNugget::Execute(Miner* pMiner)
 
 void EnterMineAndDigForNugget::Exit(Miner* pMiner)
 {
+	
+	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
   cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " 
        << "Ah'm leavin' the goldmine with mah pockets full o' sweet gold";
 }
@@ -93,6 +98,8 @@ void VisitBankAndDepositGold::Enter(Miner* pMiner)
   //on entry the miner makes sure he is located at the bank
   if (pMiner->Location() != bank)
   {
+	  
+	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
     cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Goin' to the bank. Yes siree";
 
     pMiner->ChangeLocation(bank);
@@ -113,7 +120,8 @@ void VisitBankAndDepositGold::Execute(Miner* pMiner)
   pMiner->AddToWealth(pMiner->GoldCarried());
     
   pMiner->SetGoldCarried(0);
-
+  
+	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
   cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " 
        << "Depositing gold. Total savings now: "<< pMiner->Wealth();
 
@@ -136,6 +144,8 @@ void VisitBankAndDepositGold::Execute(Miner* pMiner)
 
 void VisitBankAndDepositGold::Exit(Miner* pMiner)
 {
+	
+	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
   cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Leavin' the bank";
 }
 
@@ -158,6 +168,8 @@ void GoHomeAndSleepTilRested::Enter(Miner* pMiner)
 {
   if (pMiner->Location() != shack)
   {
+	  
+	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
     cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Walkin' home";
 
     pMiner->ChangeLocation(shack); 
@@ -175,6 +187,7 @@ void GoHomeAndSleepTilRested::Execute(Miner* pMiner)
 { 
   //if miner is not fatigued start to dig for nuggets again.
   
+	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
   if (!pMiner->Fatigued())
   {
      cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " 
@@ -235,29 +248,33 @@ void QuenchThirst::Enter(Miner* pMiner)
   if (pMiner->Location() != saloon)
   {    
     pMiner->ChangeLocation(saloon);
-
+	
+	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
     cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Boy, ah sure is thusty! Walking to the saloon";
-	Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
+	 
+  }
+  Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
                               pMiner->ID(),        //ID of sender
                               ent_Mathieu,            //ID of recipient
                               Msg_ImThirsty,   //the message
-                              NO_ADDITIONAL_INFO);    
-  }
+                              NO_ADDITIONAL_INFO);  
 }
 
 void QuenchThirst::Execute(Miner* pMiner)
 {
   pMiner->BuyAndDrinkAWhiskey();
-
+  
+	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
   cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "That's mighty fine sippin' liquer";
-
+   
   pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());  
 }
 
 
 void QuenchThirst::Exit(Miner* pMiner)
 { 
-  cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Leaving the saloon, feelin' good";
+		SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Leaving the saloon, feelin' good";
 }
 
 
@@ -268,12 +285,9 @@ bool QuenchThirst::OnMessage(Miner* pMiner, const Telegram& msg)
 	{
 	case  Msg_ImThirsty:
    {
-       
-
-     SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_RED);
-
-     cout << "\n" << GetNameOfEntity(pMiner->ID()) << 
-          ": Ok Miner, I'm ready for some fight if you want it so much!";
+     SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY|BACKGROUND_BLUE);
+	 cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Come at me Banker, I'm ready!";
+  cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Imma gonna punch ya so hard even your dog won't recognise ya!";
 	 pMiner->GetFSM()->ChangeState(Fighting::Instance());
 	 return true;
    }
@@ -293,6 +307,7 @@ EatStew* EatStew::Instance()
 
 void EatStew::Enter(Miner* pMiner)
 {
+
   cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Smells Reaaal goood Elsa!";
 }
 
@@ -321,22 +336,25 @@ bool EatStew::OnMessage(Miner* pMiner, const Telegram& msg)
 Fighting* Fighting::Instance()
 {
   static Fighting instance;
-
+  
   return &instance;
 }
 
 void Fighting::Enter(Miner* pMiner)
 {
-  if (pMiner->Location() != saloon)
-  {    
-    pMiner->ChangeLocation(saloon);
-  }
-  cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Come to me Banker, I'm ready!";
+  Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
+                              pMiner->ID(),        //ID of sender
+                              ent_Mathieu,            //ID of recipient
+                              Msg_ImThirsty,   //the message
+                              NO_ADDITIONAL_INFO);    
+  
 }
 
 void Fighting::Execute(Miner* pMiner)
 {
-  cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Pretty good taste for a whiskey";
+	
+  pMiner->BuyAndDrinkAWhiskey();
+  
   pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());  
    
 }
@@ -344,7 +362,9 @@ void Fighting::Execute(Miner* pMiner)
 
 void Fighting::Exit(Miner* pMiner)
 { 
-	
+	 SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+	cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "I won't miss you next time, banker!";
+
 }
 
 

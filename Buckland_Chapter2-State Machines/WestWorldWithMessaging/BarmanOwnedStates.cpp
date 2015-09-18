@@ -33,9 +33,10 @@ void BarmanGlobalState::Enter(Barman* pBarman)
 
 void BarmanGlobalState::Execute(Barman* pBarman)
 {
+	SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);
 	i++;
 	if(i==1)
-  cout << "\n" << GetNameOfEntity(pBarman->ID()) << ": " << "Le bar est ouvert, je rappelle que les bagarres sont interdites au sein de l'établissement !!!";
+  cout << "\n" << GetNameOfEntity(pBarman->ID()) << ": " << "The saloon is now opened, don't forget that no fight is allowed!";
 }
 
 void BarmanGlobalState::Exit(Barman* pBarman)
@@ -45,6 +46,15 @@ void BarmanGlobalState::Exit(Barman* pBarman)
 
 bool BarmanGlobalState::OnMessage(Barman* pBarman, const Telegram& msg)
 {
+	switch(msg.Msg)
+	{
+	case  Msg_IWannaFight:
+   {
+	SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);
+	 cout << "\n" << GetNameOfEntity(pBarman->ID()) << ": " << "How dare you fighting in my saloon. Imma wipe your ass and kick you outta there";
+	 return true;
+   }
+   }
   return false;
 }
 

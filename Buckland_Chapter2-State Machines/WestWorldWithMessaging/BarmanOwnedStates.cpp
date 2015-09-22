@@ -48,6 +48,12 @@ bool BarmanGlobalState::OnMessage(Barman* pBarman, const Telegram& msg)
 {
 	switch(msg.Msg)
 	{
+	case Msg_ImThirsty:	
+   {
+	SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);
+	cout <<"\n" << GetNameOfEntity(pBarman->ID()) << ": " << "There you go young thirsty man, something for you to drink!";
+	return true;
+   }
 	case  Msg_IWannaFight:
    {
 	SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);

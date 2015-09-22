@@ -18,7 +18,7 @@ extern std::ofstream os;
 #define cout os
 #endif
 
-
+bool fight=false;
 //------------------------------------------------------------------------methods for EnterMineAndDigForNugget
 EnterMineAndDigForNugget* EnterMineAndDigForNugget::Instance()
 {
@@ -253,6 +253,12 @@ void QuenchThirst::Enter(Miner* pMiner)
     cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Boy, ah sure is thusty! Walking to the saloon";
 	 
   }
+  cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Roger! Im thusty! Gimme somethin Right Naw!";
+  Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
+                              pMiner->ID(),        //ID of sender
+                              ent_Roger,            //ID of recipient
+                              Msg_ImThirsty,   //the message
+                              NO_ADDITIONAL_INFO);  
   Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
                               pMiner->ID(),        //ID of sender
                               ent_Mathieu,            //ID of recipient
@@ -273,8 +279,13 @@ void QuenchThirst::Execute(Miner* pMiner)
 
 void QuenchThirst::Exit(Miner* pMiner)
 { 
+	if(!fight)
+	{
 		SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
 		cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Leaving the saloon, feelin' good";
+	}
+	else
+		fight=false;
 }
 
 
@@ -285,6 +296,7 @@ bool QuenchThirst::OnMessage(Miner* pMiner, const Telegram& msg)
 	{
 	case  Msg_ImThirsty:
    {
+	   fight=true;
      SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY|BACKGROUND_BLUE);
 	 cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Come at me Banker, I'm ready!";
   cout << "\n" << GetNameOfEntity(pMiner->ID()) << ": " << "Imma gonna punch ya so hard even your dog won't recognise ya!";

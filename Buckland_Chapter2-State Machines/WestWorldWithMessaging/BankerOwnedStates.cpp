@@ -18,6 +18,7 @@ extern std::ofstream os;
 #define cout os
 #endif
 
+bool bankerfight=false;
 
 //------------------------------------------------------------------------methods for EnterBankAndWork
 EnterBankAndWork* EnterBankAndWork::Instance()
@@ -170,12 +171,17 @@ void QuenchThirstBanker::Enter(Banker* pBanker)
   {    
     pBanker->ChangeLocation(saloon);
 
-    cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "I need to drink something";
+    cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "Please Barman, give me some of your nicest liquer!";
+	Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
+                              pBanker->ID(),        //ID of sender
+                              ent_Roger,            //ID of recipient
+                              Msg_ImThirsty,   //the message
+                              NO_ADDITIONAL_INFO);  
 	Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
                               pBanker->ID(),        //ID of sender
                               ent_Miner_Bob,            //ID of recipient
                               Msg_ImThirsty,   //the message
-                              NO_ADDITIONAL_INFO);   
+                              NO_ADDITIONAL_INFO);    
 	 
   }
 }
@@ -197,6 +203,7 @@ void QuenchThirstBanker::Execute(Banker* pBanker)
 
 void QuenchThirstBanker::Exit(Banker* pBanker)
 { 
+	if(!bankerfight)
 	{
 	SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
 	if (pBanker -> Fatigued()){
@@ -206,6 +213,8 @@ void QuenchThirstBanker::Exit(Banker* pBanker)
 		 cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "That sure is the best saloon! Let's return to the bank";
 	}
 	}
+	else
+		bankerfight=false;
 }
 
 
@@ -228,6 +237,7 @@ bool QuenchThirstBanker::OnMessage(Banker* pBanker, const Telegram& msg)
    }
   case  Msg_ImThirsty:
    {
+	   bankerfight=true;
        SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_RED);
   cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "Ok Miner, I'm ready to fight with you";  
   cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "You shouldn't test me, Miner!";

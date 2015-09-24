@@ -74,7 +74,6 @@ bool EnterBankAndWork::OnMessage(Banker* pBanker, const Telegram& msg)
    {
      pBanker ->shared_printTelegram(pBanker->ID());
 
-     SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
 	 pBanker->shared_print(pBanker->ID(), ": Ok Miner, I'm ready to collect ya nuggets!");
 	 return true;
    }
@@ -132,7 +131,7 @@ bool GoHomeBankerAndSleepTilRested::OnMessage(Banker* pBanker, const Telegram& m
    {
  
 	 pBanker->shared_printTelegram(pBanker->ID());
-     SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
+  
 	 pBanker->shared_print(pBanker->ID(), ": Ok Miner, I'm ready to collect ya nuggets!");
     
      pBanker->GetFSM()->ChangeState(EnterBankAndWork::Instance());
@@ -191,7 +190,7 @@ void QuenchThirstBanker::Exit(Banker* pBanker)
 { 
 	if(!bankerfight)
 	{
-	SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
+
 	if (pBanker -> Fatigued()){
 		 pBanker->shared_print(pBanker->ID(), ": I'm too tired for returing work. Let's back home!");
 	} else {
@@ -212,7 +211,7 @@ bool QuenchThirstBanker::OnMessage(Banker* pBanker, const Telegram& msg)
    {
       pBanker->shared_printTelegram(pBanker->ID());
 
-     SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
+
 
 	 pBanker->shared_print(pBanker->ID(), ": Ok Miner, I'm ready to collect ya nuggets!");
 		pBanker->GetFSM()->ChangeState(EnterBankAndWork::Instance());
@@ -221,7 +220,7 @@ bool QuenchThirstBanker::OnMessage(Banker* pBanker, const Telegram& msg)
   case  Msg_ImThirsty:
    {
 	   bankerfight=true;
-       SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_RED);
+     
 	   pBanker->shared_print(pBanker->ID(), ": Ok Miner, I'm ready to fight with you");
 	   pBanker->shared_print(pBanker->ID(), ": You shouldn't test me, Miner!");
 
@@ -277,7 +276,7 @@ void BankerFighting::Execute(Banker* pBanker)
 void BankerFighting::Exit(Banker* pBanker)
 { 
 	
-	SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
+
 	pBanker->shared_print(pBanker->ID(), ": Sorry for that Roger, I promise you it won't happen again");
 }
 

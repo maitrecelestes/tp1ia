@@ -14,6 +14,7 @@
 #include <mutex>
 #include "EntityNames.h"
 #include "Time/CrudeTimer.h"
+#include "misc/ConsoleUtils.h"
 
 
 class BaseGameEntity
@@ -44,19 +45,35 @@ public:
   }
 
 
-  
+  // ALL THE COUT IS HERE, FOR PROTECTING THEM
   void shared_print(int id, std::string msg){
 		std::lock_guard<std::mutex> guard(mu);
+		color (id);
 		std::cout << "\n" << GetNameOfEntity(id) << msg;
 	}
   void shared_print(int id, std::string msg, int wealth){
 		std::lock_guard<std::mutex> guard(mu);
+		color (id);
 		std::cout << "\n" << GetNameOfEntity(id) << msg << wealth;
 	}
   void shared_printTelegram(int id){
 		std::lock_guard<std::mutex> guard(mu);
+		SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
 		std::cout << "\nMessage handled by " << GetNameOfEntity(id) << " at time: " << Clock->GetCurrentTime();
 	}
+
+void color (int id){
+	if (id==1||id==3){
+		 SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);
+	}
+	if (id==0){
+		 SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+	} 
+	if (id==2){
+		 SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
+	}
+}
+
 
   virtual ~BaseGameEntity(){}
 

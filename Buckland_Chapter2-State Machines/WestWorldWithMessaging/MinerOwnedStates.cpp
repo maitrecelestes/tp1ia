@@ -31,7 +31,7 @@ EnterMineAndDigForNugget* EnterMineAndDigForNugget::Instance()
 void EnterMineAndDigForNugget::Enter(Miner* pMiner)
 {
 	
-	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+	
   //if the miner is not already located at the goldmine, he must
   //change location to the gold mine
   if (pMiner->Location() != goldmine)
@@ -52,7 +52,7 @@ void EnterMineAndDigForNugget::Execute(Miner* pMiner)
 
   pMiner->IncreaseFatigue();
   
-	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+	
   pMiner->shared_print(pMiner->ID(), ": Pickin' up a nugget");
   //if enough gold mined, go and put it in the bank
   if (pMiner->PocketsFull())
@@ -69,7 +69,7 @@ void EnterMineAndDigForNugget::Execute(Miner* pMiner)
 
 void EnterMineAndDigForNugget::Exit(Miner* pMiner)
 {
-	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+	
 	pMiner->shared_print(pMiner->ID(), ": Ah'm leavin' the goldmine with mah pockets full o' sweet gold");
 }
 
@@ -94,8 +94,7 @@ void VisitBankAndDepositGold::Enter(Miner* pMiner)
   //on entry the miner makes sure he is located at the bank
   if (pMiner->Location() != bank)
   {
-	  
-	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+	 
 	pMiner->shared_print(pMiner->ID(), ": Goin' to the bank. Yes siree");
     pMiner->ChangeLocation(bank);
 
@@ -116,7 +115,7 @@ void VisitBankAndDepositGold::Execute(Miner* pMiner)
     
   pMiner->SetGoldCarried(0);
   
-	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+	
 	pMiner->shared_print(pMiner->ID(), ": Depositing gold. Total savings now: ", pMiner->Wealth());
   
 
@@ -139,7 +138,7 @@ void VisitBankAndDepositGold::Execute(Miner* pMiner)
 void VisitBankAndDepositGold::Exit(Miner* pMiner)
 {
 	
-	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+	
 	pMiner->shared_print(pMiner->ID(), ": Leavin' the bank");
  
 }
@@ -164,7 +163,7 @@ void GoHomeAndSleepTilRested::Enter(Miner* pMiner)
   if (pMiner->Location() != shack)
   {
 	  
-	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+	
 	pMiner->shared_print(pMiner->ID(), ": Walkin' home");
     
     pMiner->ChangeLocation(shack); 
@@ -182,7 +181,7 @@ void GoHomeAndSleepTilRested::Execute(Miner* pMiner)
 { 
   //if miner is not fatigued start to dig for nuggets again.
   
-	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+	
   if (!pMiner->Fatigued())
   {
 	 pMiner->shared_print(pMiner->ID(), ": All mah fatigue has drained away. Time to find more gold!");
@@ -204,14 +203,14 @@ void GoHomeAndSleepTilRested::Exit(Miner* pMiner)
 
 bool GoHomeAndSleepTilRested::OnMessage(Miner* pMiner, const Telegram& msg)
 {
-   SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
+  
 
    switch(msg.Msg)
    {
    case Msg_StewReady:
 
 	 pMiner->shared_printTelegram(pMiner->ID());
-     SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+    
 
 
 	 pMiner->shared_print(pMiner->ID(), ": Okay Hun, ahm a comin'!");
@@ -239,7 +238,7 @@ void QuenchThirst::Enter(Miner* pMiner)
   {    
     pMiner->ChangeLocation(saloon);
 	
-	SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+	
 
 	 pMiner->shared_print(pMiner->ID(), ": Boy, ah sure is thusty! Walking to the saloon");
   }
@@ -261,7 +260,7 @@ void QuenchThirst::Execute(Miner* pMiner)
 {
   pMiner->BuyAndDrinkAWhiskey();
   
-  SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+  
   pMiner->shared_print(pMiner->ID(), ": That's mighty fine sippin' liquer"); 
   pMiner->GetFSM()->ChangeState(EnterMineAndDigForNugget::Instance());  
 }
@@ -271,7 +270,7 @@ void QuenchThirst::Exit(Miner* pMiner)
 { 
 	if(!fight)
 	{
-		SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+		
 		pMiner->shared_print(pMiner->ID(), ": Leaving the saloon, feelin' good"); 
 	}
 	else
@@ -287,7 +286,7 @@ bool QuenchThirst::OnMessage(Miner* pMiner, const Telegram& msg)
 	case  Msg_ImThirsty:
    {
 	   fight=true;
-     SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY|BACKGROUND_BLUE);
+    
 	 pMiner->shared_print(pMiner->ID(), ": Come at me Banker, I'm ready!"); 
 	 pMiner->shared_print(pMiner->ID(), ": Imma gonna punch ya so hard even your dog won't recognise ya!"); 
 	 pMiner->GetFSM()->ChangeState(Fighting::Instance());
@@ -362,7 +361,7 @@ void Fighting::Execute(Miner* pMiner)
 
 void Fighting::Exit(Miner* pMiner)
 { 
-	 SetTextColor(FOREGROUND_RED|FOREGROUND_INTENSITY);
+	 
 	 pMiner->shared_print(pMiner->ID(), ": I won't miss you next time, banker!"); 
 }
 

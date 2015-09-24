@@ -39,7 +39,7 @@ void WifesGlobalState::Execute(MinersWife* wife)
 
 bool WifesGlobalState::OnMessage(MinersWife* wife, const Telegram& msg)
 {
-  SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
+  
 
   switch(msg.Msg)
   {
@@ -47,7 +47,7 @@ bool WifesGlobalState::OnMessage(MinersWife* wife, const Telegram& msg)
    {
 	   wife->shared_printTelegram(wife->ID()); 
 
-     SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);
+    
 	 wife->shared_print(wife->ID(), ": Hi honey. Let me make you some of mah fine country stew"); 
    
 
@@ -179,21 +179,21 @@ void CookStew::Execute(MinersWife* wife)
 
 void CookStew::Exit(MinersWife* wife)
 {
-  SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);
+ 
   wife->shared_print(wife->ID(), ": Puttin' the stew on the table");
 }
 
 
 bool CookStew::OnMessage(MinersWife* wife, const Telegram& msg)
 {
-  SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
+ 
 
   switch(msg.Msg)
   {
     case Msg_StewReady:
     {
 	   wife->shared_printTelegram(wife->ID());
-      SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);
+     
 	   wife->shared_print(wife->ID(), ": StewReady! Lets eat");
       //let hubby know the stew is ready
       Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,

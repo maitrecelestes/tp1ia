@@ -33,7 +33,6 @@ void BarmanGlobalState::Enter(Barman* pBarman)
 
 void BarmanGlobalState::Execute(Barman* pBarman)
 {
-	SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);
 	i++;
 	if(i==1)
 		pBarman->shared_print(pBarman->ID(), ": The saloon is now opened, don't forget that no fight is allowed!!");
@@ -51,13 +50,13 @@ bool BarmanGlobalState::OnMessage(Barman* pBarman, const Telegram& msg)
 	{
 	case Msg_ImThirsty:	
    {
-	SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);
+	
 	pBarman->shared_print(pBarman->ID(), ": There you go young thirsty man, something for you to drink!");
 	return true;
    }
 	case  Msg_IWannaFight:
    {
-	SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);
+	
 	pBarman->shared_print(pBarman->ID(), ": How dare you fighting in my saloon. Imma wipe your ass and kick you outta there");
 	 return true;
    }

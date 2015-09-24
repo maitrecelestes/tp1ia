@@ -8,8 +8,6 @@ bool Banker::HandleMessage(const Telegram& msg)
 
 void Banker::Update()
 {
-  SetTextColor(FOREGROUND_BLUE| FOREGROUND_INTENSITY);
-
   b_iThirst += 1;
   
   b_pStateMachine->Update();

@@ -9,10 +9,46 @@
 #include "MessageDispatcher.h"
 #include "misc/ConsoleUtils.h"
 #include "EntityNames.h"
-
+#include <thread>
 
 std::ofstream os;
 
+void startBob(Miner* Bob){
+   for(int i = 0;i <30; i++){
+	Bob->Update();
+    //dispatch any delayed messages
+    Dispatch->DispatchDelayedMessages();
+
+    Sleep(800);
+   }
+}
+void startElsa(MinersWife* Elsa){
+   for(int i = 0;i <30; i++){
+	Elsa->Update();
+    //dispatch any delayed messages
+    Dispatch->DispatchDelayedMessages();
+
+    Sleep(800);
+   }
+}
+void startMathieu(Banker* Mathieu){
+   for(int i = 0;i <30; i++){
+	Mathieu->Update();
+    //dispatch any delayed messages
+    Dispatch->DispatchDelayedMessages();
+
+    Sleep(800);
+   }
+}
+void startRoger(Barman* Roger){
+   for(int i = 0;i <30; i++){
+	Roger->Update();
+    //dispatch any delayed messages
+    Dispatch->DispatchDelayedMessages();
+
+    Sleep(800);
+   }
+}
 int main()
 {
 //define this to send output to a text file (see locations.h)
@@ -41,19 +77,18 @@ int main()
   EntityMgr->RegisterEntity(Mathieu);
   EntityMgr->RegisterEntity(Roger);
 
-  //run Bob and Elsa through a few Update calls
-  for (int i=0; i<30; ++i)
-  { 
-    Bob->Update();
-    Elsa->Update();
-	Mathieu->Update();
-	Roger->Update();
+  // create the thread
+  std::thread tBob (startBob,Bob);
+  std::thread tElsa (startElsa,Elsa);
+  std::thread tMathieu(startMathieu,Mathieu);
+  std::thread tRoger (startRoger,Roger);
 
-    //dispatch any delayed messages
-    Dispatch->DispatchDelayedMessages();
-
-    Sleep(800);
-  }
+	//Synchronize the thread
+	tBob.join();
+    tElsa.join();
+    tMathieu.join();
+	tRoger.join();
+  
 
   //tidy up
   delete Bob;

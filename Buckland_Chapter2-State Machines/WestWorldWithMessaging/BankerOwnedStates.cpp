@@ -5,9 +5,8 @@
 #include "messaging/Telegram.h"
 #include "MessageDispatcher.h"
 #include "MessageTypes.h"
-#include "Time/CrudeTimer.h"
-#include "EntityNames.h"
 
+#include "EntityNames.h"
 #include <iostream>
 using std::cout;
 
@@ -35,8 +34,7 @@ void EnterBankAndWork::Enter(Banker* pBanker)
   //change location to the bank
   if (pBanker->Location() != bank)
   {
-    cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "On my way to the bank!";
-	 
+	pBanker->shared_print(pBanker->ID(), ": On my way to the bank!");
 	pBanker->ChangeLocation(bank);
 
   }
@@ -51,8 +49,7 @@ void EnterBankAndWork::Execute(Banker* pBanker)
 
   pBanker->IncreaseFatigue();
 
-  cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "I'm working really really hard";
-
+  pBanker->shared_print(pBanker->ID(), ": I'm working really really hard");
   if (pBanker->Thirsty())
   {
     pBanker->GetFSM()->ChangeState(QuenchThirstBanker::Instance());
@@ -65,8 +62,7 @@ void EnterBankAndWork::Execute(Banker* pBanker)
 
 void EnterBankAndWork::Exit(Banker* pBanker)
 {
-  cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " 
-       << "Ah'm leavin' the bank";
+   pBanker->shared_print(pBanker->ID(), ": Ah'm leavin' the bank");
 }
 
 
@@ -76,13 +72,10 @@ bool EnterBankAndWork::OnMessage(Banker* pBanker, const Telegram& msg)
   {
   case Msg_ImatBank:
    {
-       cout << "\nMessage handled by " << GetNameOfEntity(pBanker->ID()) << " at time: " 
-       << Clock->GetCurrentTime();
+     pBanker ->shared_printTelegram(pBanker->ID());
 
      SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
-
-     cout << "\n" << GetNameOfEntity(pBanker->ID()) << 
-          ": Ok Miner, I'm ready to collect ya nuggets!";
+	 pBanker->shared_print(pBanker->ID(), ": Ok Miner, I'm ready to collect ya nuggets!");
 	 return true;
    }
  }
@@ -103,8 +96,7 @@ void GoHomeBankerAndSleepTilRested::Enter(Banker* pBanker)
 {
   if (pBanker->Location() != shack_banker)
   {
-    cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "Let's go home";
-
+	pBanker->shared_print(pBanker->ID(), ": Let's go home");
     pBanker->ChangeLocation(shack_banker); 
   }
 }
@@ -115,9 +107,7 @@ void GoHomeBankerAndSleepTilRested::Execute(Banker* pBanker)
   //if (!pBanker->Fatigued()) SI ON FAIT COMME POUR MINEUR, IL NE PERD QUE UN POINT DE FATIGUE
   if (pBanker->ShowFatigue() == 0)
   {
-     cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " 
-          << "I'm finally rested, let's work some more!";
-
+	 pBanker->shared_print(pBanker->ID(), ": I'm finally rested, let's work some more!");
      pBanker->GetFSM()->ChangeState(EnterBankAndWork::Instance());
   }
 
@@ -125,8 +115,7 @@ void GoHomeBankerAndSleepTilRested::Execute(Banker* pBanker)
   {
     //sleep
     pBanker->DecreaseFatigue();
-
-    cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "ZZZZZZZZZZZZZZZZZZZZZZZZZ... ";
+	pBanker->shared_print(pBanker->ID(), ": ZZZZZZZZZZZZZZZZZZZZZZZZZ...");
   } 
 }
 
@@ -141,15 +130,13 @@ bool GoHomeBankerAndSleepTilRested::OnMessage(Banker* pBanker, const Telegram& m
   {
   case Msg_ImatBank:
    {
-       cout << "\nMessage handled by " << GetNameOfEntity(pBanker->ID()) << " at time: " 
-       << Clock->GetCurrentTime();
-
+ 
+	 pBanker->shared_printTelegram(pBanker->ID());
      SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
-
-     cout << "\n" << GetNameOfEntity(pBanker->ID()) << 
-          ": Ok Miner, I'm ready to collect ya nuggets!";
-		pBanker->GetFSM()->ChangeState(EnterBankAndWork::Instance());
-		return true;
+	 pBanker->shared_print(pBanker->ID(), ": Ok Miner, I'm ready to collect ya nuggets!");
+    
+     pBanker->GetFSM()->ChangeState(EnterBankAndWork::Instance());
+     return true;
    }
  }
    
@@ -171,7 +158,7 @@ void QuenchThirstBanker::Enter(Banker* pBanker)
   {    
     pBanker->ChangeLocation(saloon);
 
-    cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "Please Barman, give me some of your nicest liquer!";
+	pBanker->shared_print(pBanker->ID(), ": Please Barman, give me some of your nicest liquer!");
 	Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY, //time delay
                               pBanker->ID(),        //ID of sender
                               ent_Roger,            //ID of recipient
@@ -189,8 +176,7 @@ void QuenchThirstBanker::Enter(Banker* pBanker)
 void QuenchThirstBanker::Execute(Banker* pBanker)
 {
   pBanker->BuyAndDrinkAWhiskey();
-
-  cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "Pretty good taste for a whiskey";
+  pBanker->shared_print(pBanker->ID(), ": Pretty good taste for a whiskey");
   
   if (pBanker -> Fatigued()){
 	  pBanker->GetFSM()->ChangeState(GoHomeBankerAndSleepTilRested::Instance());
@@ -207,10 +193,9 @@ void QuenchThirstBanker::Exit(Banker* pBanker)
 	{
 	SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
 	if (pBanker -> Fatigued()){
-		 cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "I'm too tired for returing work. Let's back home!";
+		 pBanker->shared_print(pBanker->ID(), ": I'm too tired for returing work. Let's back home!");
 	} else {
-
-		 cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "That sure is the best saloon! Let's return to the bank";
+		 pBanker->shared_print(pBanker->ID(), ": That sure is the best saloon! Let's return to the bank");
 	}
 	}
 	else
@@ -225,13 +210,11 @@ bool QuenchThirstBanker::OnMessage(Banker* pBanker, const Telegram& msg)
   {
   case Msg_ImatBank:
    {
-       cout << "\nMessage handled by " << GetNameOfEntity(pBanker->ID()) << " at time: " 
-       << Clock->GetCurrentTime();
+      pBanker->shared_printTelegram(pBanker->ID());
 
      SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
 
-     cout << "\n" << GetNameOfEntity(pBanker->ID()) << 
-          ": Ok Miner, I'm ready to collect ya nuggets!";
+	 pBanker->shared_print(pBanker->ID(), ": Ok Miner, I'm ready to collect ya nuggets!");
 		pBanker->GetFSM()->ChangeState(EnterBankAndWork::Instance());
 		return true;
    }
@@ -239,8 +222,8 @@ bool QuenchThirstBanker::OnMessage(Banker* pBanker, const Telegram& msg)
    {
 	   bankerfight=true;
        SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY|BACKGROUND_RED);
-  cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "Ok Miner, I'm ready to fight with you";  
-  cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "You shouldn't test me, Miner!";
+	   pBanker->shared_print(pBanker->ID(), ": Ok Miner, I'm ready to fight with you");
+	   pBanker->shared_print(pBanker->ID(), ": You shouldn't test me, Miner!");
 
 	   pBanker->GetFSM()->ChangeState(BankerFighting::Instance());
 	 return true;
@@ -295,7 +278,7 @@ void BankerFighting::Exit(Banker* pBanker)
 { 
 	
 	SetTextColor(FOREGROUND_BLUE|FOREGROUND_INTENSITY);
-	cout << "\n" << GetNameOfEntity(pBanker->ID()) << ": " << "Sorry for that Roger, I promise you it won't happen again";
+	pBanker->shared_print(pBanker->ID(), ": Sorry for that Roger, I promise you it won't happen again");
 }
 
 

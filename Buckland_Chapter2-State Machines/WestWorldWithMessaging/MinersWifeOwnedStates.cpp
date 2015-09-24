@@ -45,13 +45,11 @@ bool WifesGlobalState::OnMessage(MinersWife* wife, const Telegram& msg)
   {
   case Msg_HiHoneyImHome:
    {
-       cout << "\nMessage handled by " << GetNameOfEntity(wife->ID()) << " at time: " 
-       << Clock->GetCurrentTime();
+	   wife->shared_printTelegram(wife->ID()); 
 
      SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);
-
-     cout << "\n" << GetNameOfEntity(wife->ID()) << 
-          ": Hi honey. Let me make you some of mah fine country stew";
+	 wife->shared_print(wife->ID(), ": Hi honey. Let me make you some of mah fine country stew"); 
+   
 
      wife->GetFSM()->ChangeState(CookStew::Instance());
    }
@@ -75,7 +73,8 @@ DoHouseWork* DoHouseWork::Instance()
 
 void DoHouseWork::Enter(MinersWife* wife)
 {
-  cout << "\n" << GetNameOfEntity(wife->ID()) << ": Time to do some more housework!";
+	 wife->shared_print(wife->ID(), ": Time to do some more housework!"); 
+  
 }
 
 
@@ -85,20 +84,17 @@ void DoHouseWork::Execute(MinersWife* wife)
   {
   case 0:
 
-    cout << "\n" << GetNameOfEntity(wife->ID()) << ": Moppin' the floor";
-
+	wife->shared_print(wife->ID(), ": Moppin' the floor!"); 
     break;
 
   case 1:
 
-    cout << "\n" << GetNameOfEntity(wife->ID()) << ": Washin' the dishes";
-
+	wife->shared_print(wife->ID(), ": Washin' the dishes"); 
     break;
 
   case 2:
 
-    cout << "\n" << GetNameOfEntity(wife->ID()) << ": Makin' the bed";
-
+	wife->shared_print(wife->ID(), ": Makin' the bed"); 
     break;
   }
 }
@@ -124,20 +120,20 @@ VisitBathroom* VisitBathroom::Instance()
 
 void VisitBathroom::Enter(MinersWife* wife)
 {  
-  cout << "\n" << GetNameOfEntity(wife->ID()) << ": Walkin' to the can. Need to powda mah pretty li'lle nose"; 
+  wife->shared_print(wife->ID(), ": Walkin' to the can. Need to powda mah pretty li'lle nose"); 
+  
 }
 
 
 void VisitBathroom::Execute(MinersWife* wife)
 {
-  cout << "\n" << GetNameOfEntity(wife->ID()) << ": Ahhhhhh! Sweet relief!";
-
+  wife->shared_print(wife->ID(), ": Ahhhhhh! Sweet relief!");
   wife->GetFSM()->RevertToPreviousState();
 }
 
 void VisitBathroom::Exit(MinersWife* wife)
 {
-  cout << "\n" << GetNameOfEntity(wife->ID()) << ": Leavin' the Jon";
+	 wife->shared_print(wife->ID(), ": Leavin' the Jon");
 }
 
 
@@ -162,8 +158,7 @@ void CookStew::Enter(MinersWife* wife)
   //if not already cooking put the stew in the oven
   if (!wife->Cooking())
   {
-    cout << "\n" << GetNameOfEntity(wife->ID()) << ": Putting the stew in the oven";
-  
+	wife->shared_print(wife->ID(), ": Putting the stew in the oven");
     //send a delayed message myself so that I know when to take the stew
     //out of the oven
     Dispatch->DispatchMessage(1.5,                  //time delay
@@ -179,14 +174,13 @@ void CookStew::Enter(MinersWife* wife)
 
 void CookStew::Execute(MinersWife* wife)
 {
-  cout << "\n" << GetNameOfEntity(wife->ID()) << ": Fussin' over food";
+  wife->shared_print(wife->ID(), ": Fussin' over food");
 }
 
 void CookStew::Exit(MinersWife* wife)
 {
   SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);
-  
-  cout << "\n" << GetNameOfEntity(wife->ID()) << ": Puttin' the stew on the table";
+  wife->shared_print(wife->ID(), ": Puttin' the stew on the table");
 }
 
 
@@ -198,12 +192,9 @@ bool CookStew::OnMessage(MinersWife* wife, const Telegram& msg)
   {
     case Msg_StewReady:
     {
-      cout << "\nMessage received by " << GetNameOfEntity(wife->ID()) <<
-           " at time: " << Clock->GetCurrentTime();
-
+	   wife->shared_printTelegram(wife->ID());
       SetTextColor(FOREGROUND_GREEN|FOREGROUND_INTENSITY);
-      cout << "\n" << GetNameOfEntity(wife->ID()) << ": StewReady! Lets eat";
-
+	   wife->shared_print(wife->ID(), ": StewReady! Lets eat");
       //let hubby know the stew is ready
       Dispatch->DispatchMessage(SEND_MSG_IMMEDIATELY,
                                 wife->ID(),

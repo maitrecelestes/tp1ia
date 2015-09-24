@@ -10,8 +10,10 @@
 //
 //------------------------------------------------------------------------
 #include <string>
-
 #include "messaging/Telegram.h"
+#include <mutex>
+#include "EntityNames.h"
+#include "Time/CrudeTimer.h"
 
 
 class BaseGameEntity
@@ -31,6 +33,8 @@ private:
   //or equal to the next valid ID, before setting the ID and incrementing
   //the next valid ID
   void SetID(int val);
+  std::mutex mu;
+
 
 public:
 
@@ -38,6 +42,21 @@ public:
   {
     SetID(id);
   }
+
+
+  
+  void shared_print(int id, std::string msg){
+		std::lock_guard<std::mutex> guard(mu);
+		std::cout << "\n" << GetNameOfEntity(id) << msg;
+	}
+  void shared_print(int id, std::string msg, int wealth){
+		std::lock_guard<std::mutex> guard(mu);
+		std::cout << "\n" << GetNameOfEntity(id) << msg << wealth;
+	}
+  void shared_printTelegram(int id){
+		std::lock_guard<std::mutex> guard(mu);
+		std::cout << "\nMessage handled by " << GetNameOfEntity(id) << " at time: " << Clock->GetCurrentTime();
+	}
 
   virtual ~BaseGameEntity(){}
 

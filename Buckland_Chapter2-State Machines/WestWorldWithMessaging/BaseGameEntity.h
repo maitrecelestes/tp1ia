@@ -56,31 +56,29 @@ public:
 			std::cout << "\n" << GetNameOfEntity(id) << msg << wealth;
 		}
 	}
-  void shared_printTelegram(){
-		std::lock_guard<std::mutex> guard(mu);
-		SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
-		std::cout << "Message not handled";
-	}
+  
   void shared_printTelegramWarning(int id){
 		std::lock_guard<std::mutex> guard(mu);
 		SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
 		std::cout << "\nWarning! No Receiver with ID of " << id << " found";
 	}
-  void shared_printTelegram(int id){
+
+   void shared_printTelegram(int id=0, std::string msg="0", int idReceiver=0){
 		std::lock_guard<std::mutex> guard(mu);
 		SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
-		std::cout << "\nMessage handled by " << GetNameOfEntity(id) << " at time: " << Clock->GetCurrentTime();
+		if (id!=0 && idReceiver!=0 && msg!="0"){
+			std::cout << "\nDelayed telegram from " << GetNameOfEntity(id) << " recorded at time " << Clock->GetCurrentTime() << " for " << GetNameOfEntity(idReceiver) << ". Msg is "<< msg;
+		} else if (id!=0 && msg!="0"){
+			std::cout << "\nQueued telegram ready for dispatch: Sent to " << GetNameOfEntity(id) << ". Msg is " << msg;
+		} else if (id!=0){
+			std::cout << "\nMessage handled by " << GetNameOfEntity(id) << " at time: " << Clock->GetCurrentTime();
+		} else {
+			std::cout << "Message not handled";
+		}
+		
 	}
-   void shared_printTelegram(int id, std::string msg){
-		std::lock_guard<std::mutex> guard(mu);
-		SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
-		std::cout << "\nQueued telegram ready for dispatch: Sent to " << GetNameOfEntity(id) << ". Msg is " << msg;
-	}
-   void shared_printTelegram(int idSender, int idReceiver, std::string msg){
-		std::lock_guard<std::mutex> guard(mu);
-		SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
-		std::cout << "\nDelayed telegram from " << GetNameOfEntity(idSender) << " recorded at time " << Clock->GetCurrentTime() << " for " << GetNameOfEntity(idReceiver) << ". Msg is "<< msg;
-	}
+
+
    void shared_printTelegramInstant(int idSender, int idReceiver, std::string msg){
 		std::lock_guard<std::mutex> guard(mu);
 		SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);

@@ -102,7 +102,7 @@ void MessageDispatcher::DispatchMessage(double  delay,
     PriorityQ.insert(telegram);   
 	 if(msg<3)
   {
-	pReceiver->shared_printTelegram(pSender->ID(), pReceiver->ID(), MsgToStr(msg));
+	pReceiver->shared_printTelegram(pSender->ID(), MsgToStr(msg), pReceiver->ID());
   }
   }
             

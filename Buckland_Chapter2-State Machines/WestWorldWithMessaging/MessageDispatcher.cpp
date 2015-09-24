@@ -41,7 +41,7 @@ void MessageDispatcher::Discharge(BaseGameEntity* pReceiver,
     //telegram could not be handled
 	  if(telegram.Msg<3)
 	  {
-    cout << "Message not handled";
+		pReceiver->shared_printTelegram();
 	  }
   }
 }
@@ -63,7 +63,7 @@ void MessageDispatcher::DispatchMessage(double  delay,
 	}
 	else
 	{*/
-  SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
+ 
 
   //get pointers to the sender and receiver
   BaseGameEntity* pSender   = EntityMgr->GetEntityFromID(sender);
@@ -72,8 +72,7 @@ void MessageDispatcher::DispatchMessage(double  delay,
   //make sure the receiver is valid
   if (pReceiver == NULL)
   {
-    cout << "\nWarning! No Receiver with ID of " << receiver << " found";
-
+	pReceiver->shared_printTelegramWarning(receiver);
     return;
   }
   
@@ -86,10 +85,7 @@ void MessageDispatcher::DispatchMessage(double  delay,
   {
 	  if(msg<3)
   {
-    cout << "\nInstant telegram dispatched at time: " << Clock->GetCurrentTime()
-         << " by " << GetNameOfEntity(pSender->ID()) << " for " << GetNameOfEntity(pReceiver->ID()) 
-         << ". Msg is "<< MsgToStr(msg);
-
+	 pReceiver->shared_printTelegramInstant(pSender->ID(), pReceiver->ID(), MsgToStr(msg));
     //send the telegram to the recipient
   }
     Discharge(pReceiver, telegram);
@@ -106,9 +102,7 @@ void MessageDispatcher::DispatchMessage(double  delay,
     PriorityQ.insert(telegram);   
 	 if(msg<3)
   {
-    cout << "\nDelayed telegram from " << GetNameOfEntity(pSender->ID()) << " recorded at time " 
-            << Clock->GetCurrentTime() << " for " << GetNameOfEntity(pReceiver->ID())
-            << ". Msg is "<< MsgToStr(msg);
+	pReceiver->shared_printTelegram(pSender->ID(), pReceiver->ID(), MsgToStr(msg));
   }
   }
             
@@ -123,7 +117,7 @@ void MessageDispatcher::DispatchMessage(double  delay,
 //------------------------------------------------------------------------
 void MessageDispatcher::DispatchDelayedMessages()
 {
-  SetTextColor(BACKGROUND_RED|FOREGROUND_RED|FOREGROUND_GREEN|FOREGROUND_BLUE);
+  
   
   //get current time
   double CurrentTime = Clock->GetCurrentTime();
@@ -141,8 +135,8 @@ void MessageDispatcher::DispatchDelayedMessages()
     //find the recipient
     BaseGameEntity* pReceiver = EntityMgr->GetEntityFromID(telegram.Receiver);
 
-    cout << "\nQueued telegram ready for dispatch: Sent to " 
-         << GetNameOfEntity(pReceiver->ID()) << ". Msg is " << MsgToStr(telegram.Msg);
+	pReceiver->shared_printTelegram(pReceiver->ID(), MsgToStr(telegram.Msg));
+
 
     //send the telegram to the recipient
     Discharge(pReceiver, telegram);

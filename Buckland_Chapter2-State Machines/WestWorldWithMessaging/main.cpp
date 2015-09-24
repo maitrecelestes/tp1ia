@@ -78,10 +78,10 @@ int main()
   EntityMgr->RegisterEntity(Roger);
 
   // create the thread
-  std::thread tBob (startBob,Bob);
-  std::thread tElsa (startElsa,Elsa);
-  std::thread tMathieu(startMathieu,Mathieu);
-  std::thread tRoger (startRoger,Roger);
+  std::thread tBob (startBob,Bob);Sleep(30);
+  std::thread tElsa (startElsa,Elsa); Sleep(30);
+  std::thread tMathieu(startMathieu,Mathieu); Sleep(30);
+  std::thread tRoger (startRoger,Roger); Sleep(30);
 
 	//Synchronize the thread
 	tBob.join();
